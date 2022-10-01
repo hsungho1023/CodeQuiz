@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.codequiz.repository.mapper.RankBoardMapper">
+
+	<!-- JAVA 랭킹 20등까지 출력 -->
+	<select id="selectJavaRank" resultMap="rankMap">
+		SELECT Q.QUIZ_TYPE,
+		R.MEMBER_ID, COUNT(R.QUIZ_NUM) AS COUNT
+		FROM QUIZ_CORRECT_COUNT R LEFT
+		JOIN QUIZ_BOARD Q
+		ON Q.QUIZ_NUM = R.QUIZ_NUM
+		WHERE Q.QUIZ_TYPE="JAVA"
+		GROUP BY R.MEMBER_ID
+		ORDER BY COUNT(R.QUIZ_NUM) DESC LIMIT 20;
+	</select>
+
+	<!-- SQL 랭킹 20등까지 출력 -->
+	<select id="selectSqlRank" resultMap="rankMap">
+		SELECT Q.QUIZ_TYPE,
+		R.MEMBER_ID, COUNT(R.QUIZ_NUM) AS COUNT
+		FROM QUIZ_CORRECT_COUNT R LEFT
+		JOIN QUIZ_BOARD Q
+		ON Q.QUIZ_NUM = R.QUIZ_NUM
+		WHERE Q.QUIZ_TYPE="SQL"
+		GROUP BY R.MEMBER_ID
+		ORDER BY COUNT(R.QUIZ_NUM) DESC LIMIT 20;
+	</select>
+
+	<!-- HTML 랭킹 20등까지 출력 -->
+	<select id="selectHtmlRank" resultMap="rankMap">
+		SELECT Q.QUIZ_TYPE,
+		R.MEMBER_ID, COUNT(R.QUIZ_NUM) AS COUNT
+		FROM QUIZ_CORRECT_COUNT R LEFT
+		JOIN QUIZ_BOARD Q
+		ON Q.QUIZ_NUM = R.QUIZ_NUM
+		WHERE Q.QUIZ_TYPE="HTML"
+		GROUP BY R.MEMBER_ID
+		ORDER BY COUNT(R.QUIZ_NUM) DESC LIMIT 20;
+	</select>
+
+	<!-- CSS 랭킹 20등까지 출력 -->
+	<select id="selectCssRank" resultMap="rankMap">
+		SELECT Q.QUIZ_TYPE,
+		R.MEMBER_ID, COUNT(R.QUIZ_NUM) AS COUNT
+		FROM QUIZ_CORRECT_COUNT R LEFT
+		JOIN QUIZ_BOARD Q
+		ON Q.QUIZ_NUM = R.QUIZ_NUM
+		WHERE Q.QUIZ_TYPE="CSS"
+		GROUP BY R.MEMBER_ID
+		ORDER BY COUNT(R.QUIZ_NUM) DESC LIMIT 20;
+	</select>
+
+    <!-- JAVA 랭킹 3등까지 출력 -->
+    <select id="selectJavaRankTopThree" resultMap="rankMap">
+        SELECT Q.QUIZ_TYPE,
+        R.MEMBER_ID, COUNT(R.QUIZ_NUM) AS COUNT
+        FROM QUIZ_CORRECT_COUNT R LEFT
+        JOIN QUIZ_BOARD Q
+        ON Q.QUIZ_NUM = R.QUIZ_NUM
+        WHERE Q.QUIZ_TYPE="JAVA"
+        GROUP BY R.MEMBER_ID
+        ORDER BY COUNT(R.QUIZ_NUM) DESC LIMIT 3;
+    </select>
+
+    <!-- SQL 랭킹 3등까지 출력 -->
+    <select id="selectSqlRankTopThree" resultMap="rankMap">
+        SELECT Q.QUIZ_TYPE,
+        R.MEMBER_ID, COUNT(R.QUIZ_NUM) AS COUNT
+        FROM QUIZ_CORRECT_COUNT R LEFT
+        JOIN QUIZ_BOARD Q
+        ON Q.QUIZ_NUM = R.QUIZ_NUM
+        WHERE Q.QUIZ_TYPE="SQL"
+        GROUP BY R.MEMBER_ID
+        ORDER BY COUNT(R.QUIZ_NUM) DESC LIMIT 3;
+    </select>
+
+    <!-- HTML 랭킹 3등까지 출력 -->
+    <select id="selectHtmlRankTopThree" resultMap="rankMap">
+        SELECT Q.QUIZ_TYPE,
+        R.MEMBER_ID, COUNT(R.QUIZ_NUM) AS COUNT
+        FROM QUIZ_CORRECT_COUNT R LEFT
+        JOIN QUIZ_BOARD Q
+        ON Q.QUIZ_NUM = R.QUIZ_NUM
+        WHERE Q.QUIZ_TYPE="HTML"
+        GROUP BY R.MEMBER_ID
+        ORDER BY COUNT(R.QUIZ_NUM) DESC LIMIT 3;
+    </select>
+
+    <!-- CSS 랭킹 3등까지 출력 -->
+    <select id="selectCssRankTopThree" resultMap="rankMap">
+        SELECT Q.QUIZ_TYPE,
+        R.MEMBER_ID, COUNT(R.QUIZ_NUM) AS COUNT
+        FROM QUIZ_CORRECT_COUNT R LEFT
+        JOIN QUIZ_BOARD Q
+        ON Q.QUIZ_NUM = R.QUIZ_NUM
+        WHERE Q.QUIZ_TYPE="CSS"
+        GROUP BY R.MEMBER_ID
+        ORDER BY COUNT(R.QUIZ_NUM) DESC LIMIT 3;
+    </select>
+
+	<!-- vo별칭1은 자식 VO(movieVO), vo별칭2는 부모 VO(directorVO) -->
+	<resultMap type="com.codequiz.vo.RankBoardVo" id="memberRank">
+		<result column="MEMBER_ID" property="MemberVo.memberId" />
+	</resultMap>
+
+	<!-- resultMap(id=id1)을 상속 -->
+	<!-- vo별칭1은 자식 VO(movieVO), vo별칭2는 부모 VO(directorVO) -->
+	<resultMap type="com.codequiz.vo.RankBoardVo" id="rankMap">
+		<result column="QUIZ_TYPE" property="quizType" />
+		<result column="MEMBER_ID" property="memberId" />
+		<result column="COUNT" property="count" />
+	</resultMap>
+</mapper>

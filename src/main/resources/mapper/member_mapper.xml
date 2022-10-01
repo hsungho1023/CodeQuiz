@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.codequiz.repository.mapper.MemberMapper">
+	<!-- 회원 추가 -->
+	<insert id="insertMember" parameterType="com.codequiz.vo.MemberVo">
+		INSERT INTO MEMBER(MEMBER_ID, MEMBER_PW, MEMBER_EMAIL, MEMBER_PHONE)
+		VALUES (#{memberId},
+		#{memberPassword},
+		#{memberEmail},
+		#{memberPhone})
+	</insert>
+
+	<!-- 회원 아이디 조회 -->
+	<select id="selectMemberId" parameterType="com.codequiz.vo.MemberVo"
+		resultType="String">
+		SELECT MEMBER_ID FROM MEMBER
+	</select>
+
+	<!-- 로그인 성공 실패 -->
+	<select id="selectMemberNum" resultType="int">
+		SELECT COUNT(MEMBER_ID) FROM MEMBER WHERE MEMBER_ID=#{memberId} AND
+		MEMBER_PW=#{memberPassword}
+	</select>
+
+	<!-- 아이디 중복 -->
+	<select id="isMemberId" resultType="int">
+		SELECT COUNT(*) FROM MEMBER WHERE MEMBER_ID = #{memberId}
+	</select>
+</mapper>
+

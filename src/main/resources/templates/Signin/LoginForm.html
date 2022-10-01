@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>CODE QUIZ LOGIN</title>
+<script th:inline="javascript">
+	window.onload = function() {
+
+		var msg = /*[[${msg}]]*/"";
+
+		if (msg != null) {
+			alert(msg);
+		}
+	}
+
+	function joinForm() {
+		location.href = "/joinForm";
+	}
+</script>
+<style type="text/css">
+.bvbv {
+	font-family: 'RixInooAriDuriR' !important;
+	font-size: 34px;
+}
+
+.idpw {
+	font-family: 'GongGothicMedium' !important;
+}
+</style>
+<link type="text/css" href="../../css/volt.css" rel="stylesheet">
+</head>
+
+<body>
+
+	<form action="login" method="post">
+
+	
+		<section
+			class="vh-lg-100 mt-5 mt-lg-0 bg-soft d-flex align-items-center">
+			<div class="container">
+				<p class="text-center">
+					<a href="/" style="font-family: 'GongGothicMedium';"
+						class="d-flex align-items-center justify-content-center"> <svg
+							class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20"
+							xmlns="http://www.w3.org/2000/svg">
+							<path fill-rule="evenodd"
+								d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z"
+								clip-rule="evenodd"></path></svg> 이전페이지로 돌아가기
+					</a>
+				</p>
+				<div class="row justify-content-center form-bg-image">
+					<div
+						class="col-12 d-flex align-items-center justify-content-center">
+						<div
+							class="bg-white shadow border-0 rounded border-light p-4 p-lg-5 w-100 fmxw-500">
+							<div class="text-center text-md-center mb-4 mt-md-0">
+								<h1 class="bvbv">Welcome to Code Quiz</h1>
+							</div>
+							<form action="main" class="mt-4">
+								<!-- Form -->
+								<div class="form-group mb-4">
+									<label class="idpw" for="email">ID</label>
+									<div class="input-group">
+										<span class="input-group-text" id="basic-addon1"> <svg
+												class="icon icon-xs text-gray-600" fill="currentColor"
+												viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+												<path
+													d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+												<path
+													d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
+										</span> <input type="text" class="form-control" onKeyup="rememberOnKeyupCheck()"
+											placeholder="아이디를 입력하세요." id="formId" name="memberId" autofocus
+											required>
+									</div>
+								</div>
+								<!-- End of Form -->
+								<div class="form-group">
+									<!-- Form -->
+									<div class="form-group mb-4">
+										<label class="idpw" for="password">PW</label>
+										<div class="input-group">
+											<span class="input-group-text" id="basic-addon2"> <svg
+													class="icon icon-xs text-gray-600" fill="currentColor"
+													viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+													<path fill-rule="evenodd"
+														d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+														clip-rule="evenodd"></path></svg>
+											</span> <input type="password" placeholder="비밀번호를 입력하세요."
+												class="form-control" id="password" name="memberPassword" required>
+										</div>
+									</div>
+									
+									
+									
+									<!-- End of Form -->
+									<div
+										class="d-flex justify-content-between align-items-top mb-4">
+										<div class="form-check">
+											<input class="form-check-input" type="checkbox" value=""
+												id="remember" onChange="rememberOnChangeCheck()"> <label class="form-check-label mb-0"
+												for="remember"
+												style="font-family: 'GongGothicMedium'; font-size: 14px">
+												아이디저장 </label>
+										</div>
+										
+										
+										
+										<div>
+											<a href="./forgot-password.html" class="small text-right"
+												style="font-family: 'GongGothicMedium'; color: #d5356e;">비밀번호
+												찾기</a>
+										</div>
+										
+									</div>
+								</div>
+								<div class="d-grid">
+									<button type="submit" class="btn btn-gray-800"
+										style="font-family: 'RixInooAriDuriR'; line-height: 2.0; font-size: 1.1rem;">LOGIN</button>
+								</div>
+							</form>
+							<div
+								class="d-flex justify-content-center align-items-center mt-4">
+								<span class="fw-normal" style="font-family: 'GongGothicMedium';">
+									퀴즈 같이 풀 사람 ? <a href="/joinForm" class="fw-bold"
+									style="font-family: 'GongGothicMedium'; color: #d5356e;">회원가입</a>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</form>
+
+	<!-- <form action="login" method="post">
+	
+		<table>
+			<tr>
+				<td>아이디 :</td>
+				<td><input type="text" placeholder="아이디" size="30" 
+					required="required"></td>
+			</tr>
+
+			<tr>
+				<td>비밀번호 :</td>
+				<td><input type="password" placeholder="비밀번호" size="30"
+					 required="required"></td>
+			</tr>
+		</table>
+		
+		<button type="submit">로그인</button>
+		<button onclick="joinForm()">회원가입</button>
+		<button type="submit">아이디찾기</button>
+		<button type="submit">비밀번호찾기</button>
+
+	</form> -->
+
+
+</body>
+<!-- Core -->
+<script src="../../vendor/@popperjs/core/dist/umd/popper.min.js"></script>
+<script src="../../vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<!-- Vendor JS -->
+<script src="../../vendor/onscreen/dist/on-screen.umd.min.js"></script>
+
+<!-- Slider -->
+<script src="../../vendor/nouislider/dist/nouislider.min.js"></script>
+
+<!-- Smooth scroll -->
+<script
+	src="../../vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+
+<!-- Sweet Alerts 2 -->
+<script src="../../vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
+
+<!-- Moment JS -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+
+<!-- Notyf -->
+<script src="../../vendor/notyf/notyf.min.js"></script>
+
+<!-- Simplebar -->
+<script src="../../vendor/simplebar/dist/simplebar.min.js"></script>
+
+<!-- Volt JS -->
+<script src="../../assets/js/volt.js"></script>
+
+<script th:inline="javascript">
+document.addEventListener("DOMContentLoaded", isRemember());
+
+function isRemember(){
+	var formId = document.getElementById("formId");
+    var remember = document.getElementById("remember");
+    
+	if(getCookie("checked") == "true") {
+		formId.value = getCookie("formId");
+		remember.setAttribute("checked", "checked");
+	} else {
+		remember.removeAttribute("checked");
+	}
+}
+
+function rememberOnChangeCheck() {
+	var formId = document.getElementById("formId");
+	var remember = document.getElementById("remember");
+    
+	if(remember.checked == true) {
+		setCookie("formId", formId.value);
+		setCookie("checked", true);
+	} else {
+		setCookie("formId", "");
+        setCookie("checked", false);
+	}
+}
+
+function rememberOnKeyupCheck() {
+	var formId = document.getElementById("formId");
+    var remember = document.getElementById("remember");
+    
+    if(remember.checked == true) {
+        setCookie("formId", formId.value);
+        setCookie("checked", true);
+    } else {
+        setCookie("formId", "");
+        setCookie("checked", false);
+    }
+}
+
+function setCookie(name, value) {
+	  options = {
+	    path: '/'
+	  };
+
+	  if (options.expires instanceof Date) {
+	    options.expires = options.expires.toUTCString();
+	  }
+
+	  let updatedCookie = name + "=" + value;
+
+	  for (let optionKey in options) {
+	    updatedCookie += "; " + optionKey;
+	    let optionValue = options[optionKey];
+	    if (optionValue !== true) {
+	      updatedCookie += "=" + optionValue;
+	    }
+	}
+	document.cookie = updatedCookie;
+}
+
+function getCookie(name) {
+	     var nameOfCookie = name + "=";
+	     var x = 0; 
+	     while (x <= document.cookie.length) {
+	          var y = (x + nameOfCookie.length);
+	          if (document.cookie.substring(x, y) == nameOfCookie) {
+	               if ((endOfCookie = document.cookie.indexOf(";", y)) == -1)
+	                    endOfCookie = document.cookie.length;
+	               return unescape(document.cookie.substring(y, endOfCookie));
+	          } 
+	          x = document.cookie.indexOf(" ", x) + 1;
+	   if (x == 0){
+		   break;    
+	   }
+	    
+    } 
+    return ""; 
+}
+</script>
+</html>

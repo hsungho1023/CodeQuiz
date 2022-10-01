@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.codequiz.repository.mapper.QnABoardMapper">
+
+	<insert id="insertQnA" parameterType="com.codequiz.vo.QnABoardVo">
+		INSERT INTO QNA(QNA_TITLE, QNA_CONTENT, QNA_WRITER, QNA_WRITEDATE, QNA_READCOUNT)
+		VALUES (#{qnaTitle}, #{qnaContent}, #{qnaWriter}, #{qnaWriteDate}, #{qnaReadCount})
+	</insert>
+
+	<!-- 총 게시글 수 구하는 쿼리 -->
+	<select id="selectQnATotalCount" resultType="int">
+		SELECT COUNT(*) 
+		FROM QNA
+	</select>
+
+	<select id="selectQnA" parameterType="int" resultMap="qnaResultMap">
+		SELECT * 
+		FROM QNA 
+		WHERE QNA_NUM=#{qnaNum}
+	</select>
+
+	<select id="selectQnAList" resultMap="qnaResultMap">
+		SELECT QNA_NUM, QNA_TITLE, QNA_WRITER, QNA_WRITEDATE, QNA_READCOUNT 
+		FROM QNA 
+		ORDER BY QNA_NUM DESC
+		LIMIT #{startRow}, #{count}
+	</select>
+
+	<update id="updateQnA" parameterType="com.codequiz.vo.QnABoardVo">
+		UPDATE QNA SET
+		QNA_TITLE = #{qnaTitle}, QNA_CONTENT = #{qnaContent}, QNA_WRITEDATE = #{qnaWriteDate}
+		WHERE QNA_NUM=#{qnaNum}
+	</update>
+
+	<delete id="deleteQnA" parameterType="int">
+		DELETE FROM QNA
+		WHERE QNA_NUM=#{qnaNum}
+	</delete>
+
+	<update id="updateReadCount" parameterType="int">
+		UPDATE QNA 
+		SET QNA_READCOUNT = QNA_READCOUNT+1
+		WHERE QNA_NUM = #{qnaNum}
+	</update>
+
+	<select id = "selectQnALastThree" resultMap="qnaResultMap">
+		SELECT * 
+		FROM QNA
+		ORDER BY QNA_NUM DESC 
+		LIMIT 3;
+	</select>
+	
+	<resultMap type="com.codequiz.vo.QnABoardVo" id="qnaResultMap">
+		<result column="QNA_NUM" property="qnaNum" />
+		<result column="QNA_TITLE" property="qnaTitle" />
+		<result column="QNA_CONTENT" property="qnaContent" />
+		<result column="QNA_WRITER" property="qnaWriter" />
+		<result column="QNA_WRITEDATE" property="qnaWriteDate" />
+		<result column="QNA_READCOUNT" property="qnaReadCount" />
+	</resultMap>
+</mapper>

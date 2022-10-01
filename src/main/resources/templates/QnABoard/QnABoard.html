@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>QnA게시판</title>
+<!-- Volt CSS -->
+<link type="text/css" href="../../css/volt.css" rel="stylesheet">
+
+<style type="text/css">
+.lr {
+    border-top-left-radius: 0.5rem !important;
+    border-bottom-left-radius: 0.5rem !important;
+}
+
+.rr {
+    border-top-right-radius: 0.5rem !important;
+    border-bottom-right-radius: 0.5rem !important;
+}
+</style>
+</head>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-transparent navbar-dark navbar-theme-primary mb-4 d-flex justify-content-around">
+        <div class="d-flex w-75">
+            <div class="container-fluid px-0 flex-row d-flex align-items-center">
+                <div class="navbar-nav navbar-nav-hover">
+                    <a class="navbar-brand me-lg-3" href="/mainPage">
+                        <img class="navbar-brand-dark" src="../../assets/img/brand/dark_logo.png" alt="menuimage">
+                    </a>
+                    <!-- 각 게시판 링크 -->
+                    <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
+                        <li class="nav-item">
+                            <a th:href="@{/quizBoard(category=0, page=1)}" class="nav-link">Quiz</a>
+                        </li>
+                        <li class="nav-item">
+                            <a th:href="@{/qnaBoard(page=1)}" class="nav-link">QnA</a>
+                        </li>
+                        <li class="nav-item">
+                            <a th:href="@{/rankBoard}" class="nav-link">Ranking</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- 로그인 회원 정보 -->
+            <div class="container-fluid px-0" th:if="${session.memberCorrect} != null and ${session.memberId} != null">
+                <div class="d-flex justify-content-end" id="navbarSupportedContent">
+                    <div class="d-flex align-items-center"></div>
+                    <ul class="navbar-nav align-items-center">
+                        <li class="d-flex nav-item dropdown ms-lg-3 align-items-center">
+                            <img class="w-25 h-25" th:src="@{'../../assets/img/badge/' + ${session.rank} + '.webp'}">
+                                <div class = "inline-flex">
+                                    <a class="nav-link dropdown-toggle py-0 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <div class="media d-flex align-items-center">
+                                            <div class="media-body ms-2 text-dark align-items-center d-none d-lg-block">
+                                                <span class="mb-0 font-small fw-bold text-white" th:text="${session.memberId}"></span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="nav-link dropdown-toggle py-0 px-0" href="#" role="button" aria-expanded="false">
+                                        <div class="media d-flex align-items-center">
+                                            <div class="media-body ms-2 text-dark align-items-center d-none d-lg-block">
+                                                <span class="mb-0 font-small fw-bold text-white" th:text="'맞춘 문제 수 : ' + ${session.memberCorrect}"></span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-menu dashboard-dropdown dropdown-menu-end mt-2 py-1">
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <svg class="dropdown-icon text-gray-400 me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"></path></svg>
+                                        마이 페이지
+                                    </a>
+                                    <div role="separator" class="dropdown-divider my-1"></div>
+                                    <a class="dropdown-item d-flex align-items-center" th:href="@{/logout}">
+                                        <svg class="dropdown-icon text-danger me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>                
+                                        로그아웃
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+<body>
+<div class="row mx-0 pb-3">
+    <div class="col"></div>
+	<div class="col-8 col-lg-8 table-responsive-sm py-4">
+		<main>
+			<div class="pb-4 mb-4">
+				<div class="d-flex justify-content-between w-100 flex-wrap">
+					<div class="mb-3 mb-lg-0">
+						<h1 style="font-family: 'KOTRA_BOLD-Bold'";>
+							<a href="qnaBoard">QnA 게시판</a>
+						</h1>
+						<p class="mb-0">문제에 대해 궁금한 것을 자유롭게 작성해주세요.</p>
+					</div>
+				</div>
+			</div>
+			<!-- 테이블  -->
+			<div class="mb-4">
+				<div>
+					<div class="table-responsive">
+						<table class="table table-centered table-nowrap mb-0 text-center bg-white">
+							<thead class="thead-dark">
+								<tr>
+									<th class="border-0">번호</th>
+									<th colspan ="3" class="w-50 border-0">제목</th>
+									<th class="border-0">작성자</th>
+									<th class="border-0">작성일</th>
+									<th class="border-0">조회수</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:if="${#lists.isEmpty(qnaPage.qnaList)}">
+									<td colspan="5">작성된 게시글이 존재하지 않습니다</td>
+								</tr>
+								<tr th:if="${!#lists.isEmpty(qnaPage.qnaList)}" th:each="QnAVo : ${qnaPage.qnaList}">
+									<td th:text="${QnAVo.qnaNum}"></td>
+									<td colspan="3" class="w-50"><a th:href="@{/qnaDetail(qnaNum=${QnAVo.qnaNum})}" th:text="${QnAVo.qnaTitle}"></a></td>
+									<td th:text="${QnAVo.qnaWriter}"></td>
+									<td th:text="${#dates.format(QnAVo.qnaWriteDate, 'yyyy-MM-dd')}"></td>
+									<td th:text="${QnAVo.qnaReadCount}"></td>
+								<tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<nav class="d-flex justify-content-between px-1">
+                <ul class="pagination mb-0 d-flex">
+                    <li class="page-item">
+                        <a class="page-link lr" th:if="${qnaPage.startPage != 1}" th:href="@{/qnaBoard(page=${startPage - 5})}"><</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link lr" th:unless="${qnaPage.startPage != 1}"><</a>
+                    </li>
+                    <li class="page-item" th:each="page : ${#numbers.sequence(qnaPage.startPage, qnaPage.endPage)}" 
+                    th:if="${qnaPage.startPage <= qnaPage.endPage}" th:id = "'page_' + ${page}" >
+                        <a class="page-link" th:href="@{/qnaBoard(page=${page})}" th:text="${page}"></a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link rr" th:if="${qnaPage.endPage - qnaPage.startPage >= 4}" th:href="@{/qnaBoard(page=${qnaPage.startPage + 5})}">></a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link rr" th:unless="${qnaPage.endPage - qnaPage.startPage >= 4}">></a>
+                    </li>
+                </ul>
+                <button type="button" class="btn btn-primary h-50" th:onclick="location.href='/qnaWriteForm'">글쓰기</button>
+            </nav>
+		</main>
+	</div>
+	<div class="col"></div>
+</div>
+</body>
+
+<!-- Core -->
+<script src="../../vendor/@popperjs/core/dist/umd/popper.min.js"></script>
+<script src="../../vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<!-- Vendor JS -->
+<script src="../../vendor/onscreen/dist/on-screen.umd.min.js"></script>
+
+<!-- Slider -->
+<script src="../../vendor/nouislider/dist/nouislider.min.js"></script>
+
+<!-- Smooth scroll -->
+<script
+	src="../../vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+
+<!-- Sweet Alerts 2 -->
+<script src="../../vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
+
+<!-- Moment JS -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+
+<!-- Notyf -->
+<script src="../../vendor/notyf/notyf.min.js"></script>
+
+<!-- Simplebar -->
+<script src="../../vendor/simplebar/dist/simplebar.min.js"></script>
+
+<!-- Volt JS -->
+<script src="../../assets/js/volt.js"></script>
+<script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", activePage());
+        
+        function activePage() {
+            const params = new Proxy(new URLSearchParams(window.location.search), {
+                  get: (searchParams, prop) => searchParams.get(prop),
+            });
+            let value = params.page;
+            document.getElementById("page_" + value).classList.add("active");
+        }
+    </script>
+</html>
