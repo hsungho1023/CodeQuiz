@@ -7,15 +7,12 @@
 <title>회원가입</title>
 
 <style type="text/css">
-
 .input-group > .form-control, .id_input .input-group > .form-select {
     position: relative;
     flex: 1 1 auto;
     width: 1%;
     min-width: 0;
 }
-
-
 
 .form-control , .id_input {
     display: block;
@@ -35,11 +32,7 @@
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-
-
-
 /* 모달창 css */
-
 h5{
 	text-align: center;
 }
@@ -51,7 +44,6 @@ h5{
     pointer-events: none;
 }
 
-
 .id_ok {
 	color: green;
 	display: none;
@@ -62,27 +54,24 @@ h5{
 	display: none;
 }
 
+.small_txt {
+	font-family:'GongGothicMedium' !important;
+}
+
+.large_txt {
+	font-family:'RixInooAriDuriR' !important;
+}
 
 </style>
 
-
-
 <!-- Volt CSS -->
 <link type="text/css" href="../../css/volt.css" rel="stylesheet">
+
 <body>
 	<main>
 		<section
 			class="vh-lg-100 mt-5 mt-lg-0 bg-soft d-flex align-items-center">
 			<div class="container">
-				<p class="text-center">
-					<a href="/"
-						class="d-flex align-items-center justify-content-center"><svg
-							class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20"
-							xmlns="http://www.w3.org/2000/svg">
-							<path fill-rule="evenodd"
-								d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z"
-								clip-rule="evenodd"></path></svg> 홈페이지로 돌아가기</a>
-				</p>
 				<div class="row justify-content-center form-bg-image"
 					data-background-lg="../../assets/img/illustrations/signin.svg">
 					<div
@@ -90,13 +79,13 @@ h5{
 						<div
 							class="bg-white shadow border-0 rounded border-light p-4 p-lg-5 w-100 fmxw-500">
 							<div class="text-center text-md-center mb-4 mt-md-0">
-								<h1 class="mb-0 h3" style="font-family: 'KOTRA_BOLD-Bold'";>회원가입</h1>
+								<h1 class="mb-0 h3" style="font-family:'RixInooAriDuriR' !important;">Sign Up</h1>
 							</div>
 							<form action="join" class="mt-4" method="POST">
 								
 								<div class="form-group">
 								<div class="form-group mb-4">
-									<label for="id" style="font-family: 'KOTRA_BOLD-Bold'";>Your ID</label>
+									<label for="id" class="small_txt">Your ID</label>
 									<div class="input-group">
 										<span class="input-group-text" id="basic-addon1"><svg
 													class="icon icon-xs text-gray-600" fill="currentColor"
@@ -105,7 +94,7 @@ h5{
 														d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
 														clip-rule="evenodd"></path></svg>
 										</span><input name="memberId" type="text" class="form-control"  id="id_input"
-											placeholder="공란없이 아이디를 만들어주세요" autofocus
+											placeholder="공란없이 아이디를 입력해주세요." autofocus
 											required>		
 									</div>
 										
@@ -113,7 +102,7 @@ h5{
 										<span class="id_already">이미 사용중인 아이디입니다</span>
 								</div>
 									<div class="form-group mb-4">
-										<label for="password" style="font-family: 'KOTRA_BOLD-Bold'";>Your Password</label>
+										<label for="password" class="small_txt">Your PW</label>
 										<div class="input-group">
 											<span class="input-group-text" id="basic-addon2"><svg
 													class="icon icon-xs text-gray-600" fill="currentColor"
@@ -121,13 +110,13 @@ h5{
 													<path fill-rule="evenodd"
 														d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
 														clip-rule="evenodd"></path></svg> </span><input name="memberPassword" type="password"
-												placeholder="비밀번호를 입력해주세요" class="form-control" id="password"
+												placeholder="비밀번호를 입력해주세요." class="form-control" id="password"
 												required>
 										</div>
 									</div>
 									
 								<div class="form-group mb-4">
-									<label for="email" style="font-family: 'KOTRA_BOLD-Bold'";>Your Email</label>
+									<label for="email" class="small_txt">Your Email</label>
 									<div class="input-group">
 										<span class="input-group-text" id="basic-addon1"><svg
 												class="icon icon-xs text-gray-600" fill="currentColor"
@@ -137,17 +126,17 @@ h5{
 												<path
 													d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
 										</span><input type="email" name="memberEmail" class="form-control"
-											placeholder="example@company.com" id="email" autofocus
+											placeholder="이메일을 입력해주세요." id="email" autofocus
 											required>
 									</div>
 								</div>
 								<div class="form-group mb-4">
-										<label for="phone" style="font-family: 'KOTRA_BOLD-Bold'";>Your Phone</label>
+										<label for="phone" class="small_txt">Your Phone</label>
 										<div class="input-group">
 											<span class="input-group-text" id="basic-addon2"><svg
 													class="icon icon-xs text-gray-600" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.1.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M511.2 387l-23.25 100.8c-3.266 14.25-15.79 24.22-30.46 24.22C205.2 512 0 306.8 0 54.5c0-14.66 9.969-27.2 24.22-30.45l100.8-23.25C139.7-2.602 154.7 5.018 160.8 18.92l46.52 108.5c5.438 12.78 1.77 27.67-8.98 36.45L144.5 207.1c33.98 69.22 90.26 125.5 159.5 159.5l44.08-53.8c8.688-10.78 23.69-14.51 36.47-8.975l108.5 46.51C506.1 357.2 514.6 372.4 511.2 387z"/></svg>
 													 </span><input type="tel" name="memberPhone"
-												placeholder="Phone" class="form-control"
+												placeholder="휴대폰 번호를 입력해주세요." class="form-control"
 												id="Phone" required>
 										</div>
 									</div>
@@ -160,7 +149,7 @@ h5{
 											role="document">
 											<div class="modal-content">
 												<div class="modal-header">
-													<h2 class="h6 modal-title" style="font-family: 'KOTRA_BOLD-Bold'">CODE QUIZ 이용 및 개인정보 수집에 대한 약관</h2>
+													<h2 class="h6 modal-title small_txt">CODE QUIZ 이용 및 개인정보 수집에 대한 약관</h2>
 													<button type="button" class="btn-close"
 														data-bs-dismiss="modal" aria-label="Close"></button>
 												</div>
@@ -393,26 +382,25 @@ h5{
 									</div>
 									<div class="mb-4">
 										<div class="form-check">
-											<input class="form-check-input" type="checkbox" value=""
+											<input class="form-check-input small_txt" type="checkbox" value=""
 												id="agree" required="required"> <label
-												class="form-check-label fw-normal mb-0" for="agree"
-												style="font-family: 'KOTRA_BOLD-Bold';">
+												class="form-check-label fw-normal mb-0 small_txt" for="agree">
 													(필수) CODE QUIZ 이용에 대한 약관에 동의합니다.
 												<!-- <a href="#" class="fw-bold"> </a>-->
 											</label>
 											<br>
-											<p style="font-family: 'KOTRA_BOLD-Bold'; color: '#d5356e';">* 약관 미동의 시, 가입이 불가능합니다.</p>
+											<p class="small_txt" style="color: '#d5356e';">* 약관 미동의 시, 가입이 불가능합니다.</p>
 										</div>
 									</div>
 								</div>
 								<div class="d-grid">
-									<button type="submit" class="btn btn-gray-800">회원가입</button>
+									<button type="submit" class="large_txt btn btn-gray-800">Sign Up</button>
 								</div>
 							</form>
 							
 							<div
 								class="d-flex justify-content-center align-items-center mt-4">
-								<span class="fw-normal" style="font-family: 'KOTRA_BOLD-Bold';">계정이 있나요? <a
+								<span class="fw-normal small_txt">계정이 있나요? <a
 									href="loginForm" class="fw-bold" style="color:#d5356e;">로그인 바로가기</a></span>
 							</div>
 						</div>
