@@ -69,14 +69,6 @@ public class MemberController {
 		mv.setViewName("Signin/LoginForm");
 		return mv;
 	}
-	
-	/* 기본 값 로그인 폼 */
-	@RequestMapping("/")
-	public ModelAndView index() {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("Signin/LoginForm");
-		return mv;
-	}
 
 	/* 로그인 성공 or 실패여부 */
 	// HttpSession : 사용자 정보를 저장해서 관리하는 작업을 함(=로그인 세션처리).
@@ -84,9 +76,9 @@ public class MemberController {
 	public String login(String memberId, String memberPassword, HttpSession session, RedirectAttributes ra) {
 		if (service.login(memberId, memberPassword)) {
 			// 로그인 성공시 세션에 기록해두는 작업
-			// setAttribut("key", value); 형태
+			// setAttribute("key", value); 형태
 			session.setAttribute("memberId", memberId);
-			return "redirect:mainPage";
+			return "redirect:/";
 		} else {
 			ra.addFlashAttribute("msg", "아이디가 존재하지 않거나 비밀번호가 일치하지 않습니다.");
 			return "redirect:loginForm";

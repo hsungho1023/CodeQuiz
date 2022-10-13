@@ -57,26 +57,21 @@ public class QuizBoardController {
 		} else if (service.boardPaging(page, stringCategory).getEndPage() < page) {
 			page = service.boardPaging(page, stringCategory).getEndPage();
 		}
-		
-		// 로그인 확인, 실패시 로그인 페이지로 전달.
-		if (memberId != null && memberId.length() > 0) {
-			// 로그인한 유저의 맞춘 총 퀴즈 수.
-			session.setAttribute("memberCorrect", service.selectMemberCorrectCount(memberId));
-			session.getAttribute("memberCorrect");
-			// 카테고리 변경 후에도 해당 선택을 고정하기 위해 세션에 전달.
-			session.setAttribute("category", category);
-			// 목록으로 돌아갈 때 사용할 현재 페이지의 수.
-			session.setAttribute("currentPage", page);
-			// 로그인한 유저의 맞춘 퀴즈 수 총 퍼센테이지.
-			session.getAttribute("memberCorrect");
-			mv.addObject("quizList", service.boardPaging(page, stringCategory));
-			mv.addObject("startPage", service.boardPaging(page, stringCategory).getStartPage());
-			mv.addObject("endPage", service.boardPaging(page, stringCategory).getEndPage());
-			mv.addObject("category", category);
-			mv.setViewName("QuizBoard/QuizBoard");
-		} else {
-			mv.setViewName("redirect:loginForm");
-		}
+	
+		// 로그인한 유저의 맞춘 총 퀴즈 수.
+		session.setAttribute("memberCorrect", service.selectMemberCorrectCount(memberId));
+		session.getAttribute("memberCorrect");
+		// 카테고리 변경 후에도 해당 선택을 고정하기 위해 세션에 전달.
+		session.setAttribute("category", category);
+		// 목록으로 돌아갈 때 사용할 현재 페이지의 수.
+		session.setAttribute("currentPage", page);
+		// 로그인한 유저의 맞춘 퀴즈 수 총 퍼센테이지.
+		session.getAttribute("memberCorrect");
+		mv.addObject("quizList", service.boardPaging(page, stringCategory));
+		mv.addObject("startPage", service.boardPaging(page, stringCategory).getStartPage());
+		mv.addObject("endPage", service.boardPaging(page, stringCategory).getEndPage());
+		mv.addObject("category", category);
+		mv.setViewName("QuizBoard/QuizBoard");
 		return mv;
 	}
 	
