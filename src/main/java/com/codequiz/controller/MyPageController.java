@@ -84,7 +84,21 @@ public class MyPageController {
 			mv.addObject("startPage", service.boardPaging(page, stringCategory, memberId).getStartPage());
 			mv.addObject("endPage", service.boardPaging(page, stringCategory, memberId).getEndPage());
 			mv.addObject("category", category);
-			mv.setViewName("MyPage/MyPageQuiz");
+			mv.setViewName("MyPage/MyPageQuizBoard");
+		} else {
+			mv.setViewName("redirect:loginForm");
+		}
+		return mv;
+	}
+	
+	@RequestMapping("/myPageChangePassword")
+	public ModelAndView myPageChangePassword(HttpSession session) {
+		// 로그인 확인용.
+		String memberId = (String)session.getAttribute("memberId");
+		ModelAndView mv = new ModelAndView();
+		// 로그인 확인, 실패시 로그인 페이지로 전달.
+		if (memberId != null && memberId.length() > 0) {
+			mv.setViewName("MyPage/MyPageChangePassword");
 		} else {
 			mv.setViewName("redirect:loginForm");
 		}

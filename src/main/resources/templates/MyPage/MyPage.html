@@ -41,18 +41,18 @@
 	<div class="row mx-0 pb-3">
 		<div class="col"></div>
 		<div class="col-8 col-lg-8 table-responsive-sm py-4">
-			<h1 class="pb-2 mb-0"><a th:href="@{/myPageQuizBoard(category=0, page=1)}">마이 페이지</a></h1>
+			<h1 class="pb-2 mb-0"><a th:href="@{/myPage}">마이 페이지</a></h1>
 			<p class="pb-4">맞췄던 퀴즈를 확인하거나 비밀번호를 변경할 수 있습니다.</p>
 			<div class="card mt-5 pt-5 mb-3">
 				<div class="d-flex justify-content-around mb-3">
 					<a th:href="@{/myPageQuizBoard(category=0, page=1)}" class="text-center text-weight-bold h2">맞춘 퀴즈 확인</a>
-					<a href="/" class="text-center text-weight-bold h2">비밀번호 변경</a>
+					<a th:href="@{/myPageChangePassword}" class="text-center text-weight-bold h2">비밀번호 변경</a>
 				</div>
 				<div class="d-flex justify-content-around">
 					<a th:href="@{/myPageQuizBoard(category=0, page=1)}" class="border border-primary rounded-circle w-25 h-25 mb-5">
 						<img class="rounded-circle" src="../../assets/img/icons/quiz_history.png">
 					</a>
-					<a href="/" class="border border-primary rounded-circle w-25 h-25 mb-5">
+					<a th:href="@{/myPageChangePassword}" class="border border-primary rounded-circle w-25 h-25 mb-5">
 						<img class="rounded-circle" src="../../assets/img/icons/change_password.png">
 					</a>
 				</div>
