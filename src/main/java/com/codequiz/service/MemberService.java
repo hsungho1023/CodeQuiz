@@ -38,7 +38,6 @@ public class MemberService {
 
 	// 로그인 메서드
 	public boolean login(String memberId, String memberPassword) {
-		System.out.println(dao.selectMemberNum(memberId, memberPassword));
 		if (dao.selectMemberNum(memberId, memberPassword) == 1) {
 			return true;
 		} else {

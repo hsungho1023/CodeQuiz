@@ -35,7 +35,6 @@ public class MemberController {
 	@ResponseBody
 	public String isMemberId(String memberId) throws Exception {
 		int result = service.isMemberId(memberId);
-		System.out.println(result);
 		if (result != 0) {
 			return "fail";
 		} else {

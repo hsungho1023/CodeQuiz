@@ -65,11 +65,7 @@ public class MyPageService{
 		if (totalPage < endPage) {
 			endPage = totalPage;
 		}
-		
-		System.out.println("Start page : " + startPage);
-		System.out.println("End page : " + endPage);
-		System.out.println("Total page : " + totalPage);
-		
+
 		// 글 조회 행 시작 번호 계산
 		// 페이지 당 0~9 행만 출력
 		int startRow = (currentPage-1) * COUNT_PER_PAGE;

@@ -144,7 +144,6 @@ public class QuizBoardController {
 		session.setAttribute("memberCorrect", service.selectMemberCorrectCount(memberId));
 		session.getAttribute("memberCorrect");
 		int sqa = Integer.parseInt(selectedQuizAnswer);
-		System.out.println(selectedQuizAnswer);
 		// 로그인 확인 후, 성공 시에는 해당 게시물 DB에 입력, 실패 시 QuizBoard 로 이동.
 		if (memberId != null && memberId.length() > 0) {
 			// 카테고리 값에 맞게 치환
