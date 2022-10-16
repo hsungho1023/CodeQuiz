@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE QUIZ_NUM = #{quizNum} 
 	</select>
 	
-	<!-- 개인의 맞춘 문제 불러오기 -->
+	<!-- 개인의 맞춘 문제 수 불러오기 -->
 	<select id = "selectMemberCorrectCount" resultType="int">
 		SELECT COUNT(*) 
 		FROM QUIZ_CORRECT_COUNT 

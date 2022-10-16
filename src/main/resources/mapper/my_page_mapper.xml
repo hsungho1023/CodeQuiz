@@ -1,0 +1,78 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "com.codequiz.repository.mapper.MyPageMapper">
+	<!-- 맞춘 사람 수 불러오기 -->
+	<select id = "selectQuizCorrectCount" resultType="int">
+		SELECT COUNT(*) 
+		FROM QUIZ_CORRECT_COUNT 
+		WHERE QUIZ_NUM = #{quizNum} 
+	</select>
+	
+	<!-- 개인의 맞춘 문제 수 불러오기 -->
+	<select id = "selectMemberCorrectCount" resultType="int">
+		SELECT COUNT(*) 
+		FROM QUIZ_CORRECT_COUNT 
+		WHERE MEMBER_ID = #{memberId} 
+	</select>
+
+	<!-- 한 페이지의 퀴즈 리스트 불러오기  -->
+	<select id = "selectQuizList" resultMap = "quizBoardResultMap">
+		SELECT * 
+		FROM QUIZ_BOARD qb 
+		LEFT JOIN QUIZ_CORRECT_COUNT qcc 
+		ON qb.QUIZ_NUM = qcc.QUIZ_NUM 
+		WHERE qcc.MEMBER_ID = #{memberId}
+		ORDER BY qb.QUIZ_NUM DESC 
+		LIMIT #{startRow}, #{count_per_page};
+	</select>
+	
+	<!-- 카테고리로 분류된 한 페이지의 퀴즈 리스트 불러오기 -->
+	<select id = "selectQuizListByCategory" resultMap = "quizBoardResultMap">
+		SELECT * 
+		FROM QUIZ_BOARD qb 
+		LEFT JOIN QUIZ_CORRECT_COUNT qcc 
+		ON qb.QUIZ_NUM = qcc.QUIZ_NUM 
+		WHERE qb.QUIZ_TYPE = #{category} 
+		AND qcc.MEMBER_ID = #{memberId}
+		ORDER BY qb.QUIZ_NUM DESC 
+		LIMIT #{startRow}, #{count_per_page};
+	</select>
+	
+	<!-- 모든 맞춘 퀴즈의 개수 불러오기 -->
+	<select id = "selectQuizCount" resultType = "int">
+		SELECT COUNT(*) 
+		FROM QUIZ_BOARD qb 
+		LEFT JOIN QUIZ_CORRECT_COUNT qcc 
+		ON qb.QUIZ_NUM = qcc.QUIZ_NUM 
+		WHERE qcc.MEMBER_ID = #{memberId}
+	</select>
+	
+	<!-- 카테고리로 분류된 맞춘 퀴즈의 개수 불러오기 -->
+	<select id = "selectQuizCountByCategory" resultType = "int">
+		SELECT COUNT(*) 
+		FROM QUIZ_BOARD qb 
+		LEFT JOIN QUIZ_CORRECT_COUNT qcc 
+		ON qb.QUIZ_NUM = qcc.QUIZ_NUM 
+		WHERE qcc.MEMBER_ID = #{memberId}
+		AND qb.QUIZ_TYPE = #{category}
+	</select>
+
+	<resultMap type = "com.codequiz.vo.QuizBoardVo" id = "quizBoardResultMap">
+		<result column = "QUIZ_NUM" property = "quizNum"/>
+		<result column = "QUIZ_TITLE" property = "quizTitle"/>
+		<result column = "QUIZ_CONTENTS" property = "quizContents"/>		
+		<result column = "QUIZ_WRITER" property = "quizWriter"/>
+		<result column = "QUIZ_WRITE_DATE" property = "quizWriteDate"/>
+		<result column = "QUIZ_ANSWER1" property = "quizAnswer1"/>
+		<result column = "QUIZ_ANSWER2" property = "quizAnswer2"/>
+		<result column = "QUIZ_ANSWER3" property = "quizAnswer3"/>
+		<result column = "QUIZ_ANSWER4" property = "quizAnswer4"/>
+		<result column = "QUIZ_TRUE_ANSWER" property = "quizTrueAnswer"/>
+		<result column = "QUIZ_VIEW" property = "quizView"/>
+		<result column = "QUIZ_TYPE" property = "quizType"/>
+	</resultMap>
+</mapper>

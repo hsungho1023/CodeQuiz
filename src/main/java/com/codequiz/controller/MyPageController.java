@@ -8,12 +8,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.codequiz.service.MyPageService;
 import com.codequiz.service.QuizBoardService;
 
 @Controller
 public class MyPageController {
 	@Autowired
-	private QuizBoardService service;
+	private MyPageService service;
+	
+	@RequestMapping("/myPage")
+	public ModelAndView myPage(HttpSession session) {
+		// 로그인 확인용.
+		String memberId = (String)session.getAttribute("memberId");
+		ModelAndView mv = new ModelAndView();
+		// 로그인 확인, 실패시 로그인 페이지로 전달.
+		if (memberId != null && memberId.length() > 0) {
+			mv.setViewName("/MyPage/MyPage");
+		} else {
+			mv.setViewName("redirect:loginForm");
+		}
+		return mv;
+	}
 	
 	/**
 	 * 마이 페이지 게시판 컨트롤러.
@@ -22,8 +37,8 @@ public class MyPageController {
 	 * @param session 세션
 	 * @return 퀴즈 목록, 시작 페이지, 끝 페이지, 카테고리를 반환하여 MyPage 로 보냄.
 	 */
-	@RequestMapping("/myPage")
-	public ModelAndView quizBoard(@RequestParam(defaultValue = "0") int category, @RequestParam(defaultValue = "1") int page, HttpSession session) {
+	@RequestMapping("/myPageQuizBoard")
+	public ModelAndView myPageQuizBoard(@RequestParam(defaultValue = "0") int category, @RequestParam(defaultValue = "1") int page, HttpSession session) {
 		// 로그인 확인용.
 		String memberId = (String)session.getAttribute("memberId");
 		ModelAndView mv = new ModelAndView();
@@ -47,16 +62,15 @@ public class MyPageController {
 			default :
 				stringCategory = "ALL";
 		}
-		
-		// 페이징에서 현재 페이지를 0 이하나 음수값, 또는 끝 페이지를 넘어가지 못하게 함. 
-		if(page <= 0) {
-			page = 1;
-		} else if (service.boardPaging(page, stringCategory).getEndPage() < page) {
-			page = service.boardPaging(page, stringCategory).getEndPage();
-		}
-		
+
 		// 로그인 확인, 실패시 로그인 페이지로 전달.
 		if (memberId != null && memberId.length() > 0) {
+			// 페이징에서 현재 페이지를 0 이하나 음수값, 또는 끝 페이지를 넘어가지 못하게 함. 
+			if(page <= 0) {
+				page = 1;
+			} else if (service.boardPaging(page, stringCategory, memberId).getEndPage() < page) {
+				page = service.boardPaging(page, stringCategory, memberId).getEndPage();
+			}
 			// 로그인한 유저의 맞춘 총 퀴즈 수.
 			session.setAttribute("memberCorrect", service.selectMemberCorrectCount(memberId));
 			session.getAttribute("memberCorrect");
@@ -66,11 +80,11 @@ public class MyPageController {
 			session.setAttribute("currentPage", page);
 			// 로그인한 유저의 맞춘 퀴즈 수 총 퍼센테이지.
 			session.getAttribute("memberCorrect");
-			mv.addObject("quizList", service.boardPaging(page, stringCategory));
-			mv.addObject("startPage", service.boardPaging(page, stringCategory).getStartPage());
-			mv.addObject("endPage", service.boardPaging(page, stringCategory).getEndPage());
+			mv.addObject("quizList", service.boardPaging(page, stringCategory, memberId));
+			mv.addObject("startPage", service.boardPaging(page, stringCategory, memberId).getStartPage());
+			mv.addObject("endPage", service.boardPaging(page, stringCategory, memberId).getEndPage());
 			mv.addObject("category", category);
-			mv.setViewName("MyPage/MyPage");
+			mv.setViewName("MyPage/MyPageQuiz");
 		} else {
 			mv.setViewName("redirect:loginForm");
 		}

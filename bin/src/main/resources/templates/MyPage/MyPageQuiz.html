@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://thymeleaf.org">
-<head> 
+<head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Code Quiz</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -22,8 +22,20 @@
 
 <!-- Volt CSS -->
 <link type="text/css" href="../../css/volt.css" rel="stylesheet">
+
+<style type="text/css">
+.lr {
+	border-top-left-radius: 0.5rem !important;
+    border-bottom-left-radius: 0.5rem !important;
+}
+
+.rr {
+	border-top-right-radius: 0.5rem !important;
+    border-bottom-right-radius: 0.5rem !important;
+}
+</style>
+
 </head>
-<!-- 헤더 -->
 <header>
     <nav class="navbar navbar-expand-lg navbar-transparent navbar-dark navbar-theme-primary mb-4 d-flex justify-content-around">
         <div class="d-flex w-75">
@@ -93,165 +105,65 @@
         </div>
     </nav>
 </header>
-<!-- 헤더 끝 -->
 <body>
-	<!-- 메인 영역 1 -->
-	<div class="row mx-0">
-		<div class="col"></div>
-		<!-- 배너 캐러셀 -->
-		<div class="col-3 col-lg-3 table-responsive py-3 pt-1 text-center">
-			<div id="carousel" class="carousel slide pt-4" data-bs-ride="carousel" data-ride="carousel">
-				<div class="carousel-inner">
-					<div class="carousel-item active" data-bs-interval="4500">
-						<a th:href="@{/quizBoard(category=0, page=1)}">
-							<img class="d-block w-100" src="../assets/img/banner/banner1.png">
-						</a>
-					</div>
-					<div class="carousel-item" data-bs-interval="4500">
-						<a th:href="@{/quizWriteForm}">
-							<img class="d-block w-100" src="../assets/img/banner/banner2.png">
-						</a>
-					</div>
-					<div class="carousel-item" data-bs-interval="4500">
-                        <a th:href="@{/quizWriteForm}">
-                            <img class="d-block w-100" src="../assets/img/banner/banner3.png">
-                        </a>
-                    </div>
-				</div>
-			</div>
-		</div>
-		<!-- 배너 캐러셀 끝 -->
-		<div class="col"></div>
-	</div>
-	<!-- 메인 영역 1 끝 -->
-	<!-- 메인 영역 2 -->
-	<!-- 게시판 -->
-	<div class="row mx-0 pt-3">
-		<div class="col"></div>
-		<!-- 퀴즈 게시판 -->
-		<div class="col-4 col-lg-4 table-responsive py-4">
-			<h2 class="text-left"><a th:href="@{/quizBoard(category=0, page=1)}">퀴즈 게시판</a></h2>
-			<table class="bg-white table table-flush text-center" id="datatable">
-				<thead class="thead-dark">
-					<tr>
-						<th colspan="2" class="w-75">제목</th>
-						<th colspan="1">작성일</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="list, index : ${quizList}">
-						<td colspan="2" class="w-75"><a th:href="@{/quizDetail(quizNum=${list.quizNum})}" th:text="'[' + ${list.quizType} + '] ' +${list.quizTitle}"></a></td>
-						<td colspan="1" th:text="${#dates.format(list.quizWriteDate, 'yyyy-MM-dd')}"></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<!-- 퀴즈 게시판 끝 -->
-		<!-- QnA 게시판 -->
-		<div class="col-4 col-lg-4 table-responsive py-4">
-			<h2 class="text-left"><a th:href="@{/qnaBoard}">QnA 게시판</a></h2>
-			<table class="bg-white table table-flush text-center" id="datatable">
-				<thead class="thead-dark">
-					<tr>
-						<th colspan="2" class="w-75">제목</th>
-						<th colspan="1">작성일</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="list, index : ${qnaList}">
-						<td colspan="2" class="w-75"><a th:href="@{/qnaDetail(qnaNum=${list.qnaNum})}" th:text="${list.qnaTitle}"></a></td>
-						<td colspan="1" th:text="${#dates.format(list.qnaWriteDate, 'yyyy-MM-dd')}"></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<!-- QnA 게시판 끝 -->
-		<div class="col"></div>
-	</div>
-	<!-- 메인 영역 2 끝 -->
-	<!-- 메인 영역 3 -->
 	<div class="row mx-0 pb-3">
 		<div class="col"></div>
-		<!-- JAVA 랭킹 게시판 -->
-		<div class="col-2 col-lg-2 table-responsive py-4">
-			<h4 class="text-left"><a th:href="@{/quizBoard(category=0, page=1)}">JAVA 랭킹</a></h4>
-			<table class="bg-white table table-flush text-center" id="datatable">
+		<div class="col-8 col-lg-8 table-responsive-sm py-4">
+			<h1 class="pb-2 mb-0"><a th:href="@{/quizBoard(category=0, page=1)}">마이 페이지</a></h1>
+			<p class="pb-4">맞췄던 퀴즈를 다시 볼 수 있습니다.</p>
+			<select id="category" class="form-control w-25" th:onchange="category(this.value)">
+				<option value="0" id="ALL" th:selected="${session.category == 0}">모든 언어</option>
+				<option value="1" id="JAVA" th:selected="${session.category == 1}">JAVA</option>
+				<option value="2" id="SQL" th:selected="${session.category == 2}">SQL</option>
+				<option value="3" id="HTML" th:selected="${session.category == 3}">HTML</option>
+				<option value="4" id="CSS" th:selected="${session.category == 4}">CSS</option>
+			</select>
+			<table class="table table-flush mb-3 text-center bg-white" id="datatable">
 				<thead class="thead-dark">
-					<tr>
-						<th colspan="2" class="w-75">아이디</th>
-						<th colspan="1">맞춘 문제 수</th>
-					</tr>
+				<tr>
+					<th>번호</th>
+					<th class = "w-50" colspan="3">제목</th>
+					<th>작성자</th>
+					<th>작성일</th>
+					<th>조회수</th>
+					<th>맞춘 사람 수</th>
+				</tr>
 				</thead>
 				<tbody>
-					<tr th:each="list : ${javaListThree}">
-						<td colspan="2" class="rankLists" th:text="${list.memberId}"></td>
-						<td colspan="1" th:text="${list.count}"></td>
+					<tr th:each="index : ${#numbers.sequence(0, #arrays.length(quizList.boardList)-1)}">
+						<td th:text="${quizList.boardList[index].quizNum}"></td>
+						<td colspan="3"><a th:href="@{/quizDetail(quizNum=${quizList.boardList[index].quizNum}, category=${session.category}, page=${session.currentPage})}" th:text="'[' + ${quizList.boardList[index].quizType} + '] ' + ${quizList.boardList[index].quizTitle}"></a></td>
+						<td th:text="${quizList.boardList[index].quizWriter}"></td>
+						<td th:text="${#dates.format(quizList.boardList[index].quizWriteDate, 'yyyy-MM-dd')}"></td>
+						<td th:text="${quizList.boardList[index].quizView}"></td>
+						<td th:text="${quizList.correctMemberCount[index]}"></td>
 					</tr>
 				</tbody>
-			</table>
+			</table>	
+			<nav class="d-flex justify-content-between">
+				<ul class="pagination mb-0 d-flex">
+					<li class="page-item">
+						<a class="page-link lr" th:if="${startPage != 1}" th:href="@{/quizBoard(category=${category}, page=${startPage - 5})}"><</a>
+			        </li>
+					<li class="page-item">
+						<a class="page-link lr" th:unless="${startPage != 1}"><</a>
+					</li>
+					<li class="page-item" th:each="page : ${#numbers.sequence(startPage, endPage)}" 
+					th:if="${startPage <= endPage}" th:id = "'page_' + ${page}" >
+						<a class="page-link" th:href="@{/quizBoard(category=${category}, page=${page})}" th:text="${page}"></a>
+					</li>
+					<li class="page-item">
+						<a class="page-link rr" th:if="${endPage - startPage >= 4}" th:href="@{/quizBoard(category=${category}, page=${startPage + 5})}">></a>
+					</li>
+					<li class="page-item">
+						<a class="page-link rr" th:unless="${endPage - startPage >= 4}">></a>
+					</li>
+				</ul>
+				<button type="button" class="btn btn-primary h-50" th:onclick="location.href='/quizWriteForm'">글쓰기</button>
+			</nav>
 		</div>
-		<!-- JAVA 랭킹 게시판 끝 -->
-		<!-- SQL 랭킹 게시판 -->
-        <div class="col-2 col-lg-2 table-responsive py-4">
-            <h4 class="text-left"><a th:href="@{/quizBoard(category=0, page=1)}">SQL 랭킹</a></h4>
-            <table class="bg-white table table-flush text-center" id="datatable">
-                <thead class="thead-dark">
-	                <tr>
-	                    <th colspan="2" class="w-75">아이디</th>
-	                    <th colspan="1">맞춘 문제 수</th>
-	                </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="list : ${sqlListThree}">
-                        <td colspan="2" class="rankLists" th:text="${list.memberId}"></td>
-                        <td colspan="1" th:text="${list.count}"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <!-- SQL 랭킹 게시판 끝 -->
-        <!-- HTML 랭킹 게시판 -->
-        <div class="col-2 col-lg-2 table-responsive py-4">
-            <h4 class="text-left"><a th:href="@{/quizBoard(category=0, page=1)}">HTML 랭킹</a></h4>
-            <table class="bg-white table table-flush text-center" id="datatable">
-                <thead class="thead-dark">
-	                <tr>
-	                    <th colspan="2" class="w-75">아이디</th>
-	                    <th colspan="1">맞춘 문제 수</th>
-	                </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="list : ${htmlListThree}">
-                        <td colspan="2" class="rankLists" th:text="${list.memberId}"></td>
-                        <td colspan="1" th:text="${list.count}"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <!-- HTML 랭킹 게시판 끝 -->
-        <!-- CSS 랭킹 게시판 -->
-        <div class="col-2 col-lg-2 table-responsive py-4">
-            <h4 class="text-left"><a th:href="@{/quizBoard(category=0, page=1)}">CSS 랭킹</a></h4>
-            <table class="bg-white table table-flush text-center" id="datatable">
-                <thead class="thead-dark">
-	                <tr>
-	                    <th colspan="2" class="w-75">아이디</th>
-	                    <th colspan="1">맞춘 문제 수</th>
-	                </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="list : ${cssListThree}">
-                        <td colspan="2" class="rankLists" th:text="${list.memberId}"></td>
-                        <td colspan="1" th:text="${list.count}"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <!-- CSS 랭킹 게시판 끝 -->
-		<!-- 게시판 끝 -->
-	<div class="col"></div>
+		<div class="col"></div>
 	</div>
-	<!-- 메인 영역 3 끝 -->
 	<!-- Core -->
 	<script src="../../vendor/@popperjs/core/dist/umd/popper.min.js"></script>
 	<script src="../../vendor/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -279,5 +191,22 @@
 	
 	<!-- Volt JS -->
 	<script src="../../assets/js/volt.js"></script>
+	
+	<script type="text/javascript">
+	    document.addEventListener("DOMContentLoaded", activePage());
+	    
+		function category(value) {
+			var categoryId = document.getElementById("category");
+			location.href="/quizBoard?category=" + categoryId.value + "&page=1";
+		}
+		
+		function activePage() {
+			const params = new Proxy(new URLSearchParams(window.location.search), {
+				  get: (searchParams, prop) => searchParams.get(prop),
+			});
+			let value = params.page;
+		    document.getElementById("page_" + value).classList.add("active");
+		}
+	</script>
 </body>
 </html>
